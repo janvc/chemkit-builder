@@ -61,10 +61,10 @@ ManipulateTool::~ManipulateTool()
 // --- Events -------------------------------------------------------------- //
 void ManipulateTool::mousePressEvent(QMouseEvent *event)
 {
-    m_initialPosition = event->posF();
-    m_lastPosition = event->posF();
+    m_initialPosition = event->localPos();
+    m_lastPosition = event->localPos();
 
-    if(m_hasSelection && view()->overlay()->itemAt(event->pos()) == m_selectionOverlayItem){
+    if(m_hasSelection && view()->overlay()->itemAt(event->localPos(), QTransform()) == m_selectionOverlayItem){
         setState(MovingSelection);
         builder()->beginMoleculeEdit();
     }
@@ -116,7 +116,7 @@ void ManipulateTool::mouseMoveEvent(QMouseEvent *event)
         }
     }
 
-    m_lastPosition = event->posF();
+    m_lastPosition = event->localPos();
     view()->update();
 }
 

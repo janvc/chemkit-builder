@@ -37,6 +37,7 @@
 #define MOLECULELISTDOCK_H
 
 #include <QtGui>
+#include <QtWidgets>
 
 #ifndef Q_MOC_RUN
     #include <chemkit/molecule.h>

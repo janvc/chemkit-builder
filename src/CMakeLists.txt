@@ -4,9 +4,11 @@ include_directories(${CHEMKIT_INCLUDE_DIRS})
 find_package(Boost COMPONENTS system filesystem iostreams REQUIRED)
 include_directories(${Boost_INCLUDE_DIRS})
 
-find_package(Qt4 4.6 COMPONENTS QtCore QtGui QtOpenGL REQUIRED)
-set(QT_USE_QTGUI TRUE)
-include(${QT_USE_FILE})
+find_package(Qt5 COMPONENTS Widgets OpenGL LinguistTools REQUIRED)
+include_directories(${Qt5Widgets_INCLUDE_DIRS})
+include_directories(${Qt5OpenGL_INCLUDE_DIRS})
+
+set(CMAKE_AUTOMOC ON)
 
 include_directories(${CMAKE_CURRENT_BINARY_DIR})
 
@@ -45,9 +47,9 @@ set(UI_FORMS
   toolsettingsdock.ui
 )
 
-qt4_wrap_ui(UI_SOURCES ${UI_FORMS})
-qt4_wrap_cpp(MOC_SOURCES ${MOC_HEADERS})
+qt5_wrap_ui(UI_SOURCES ${UI_FORMS})
+qt5_add_resources(RCC_SOURCES ${RESOURCES})
 
-add_executable(chemkit-builder ${SOURCES} ${MOC_SOURCES} ${UI_SOURCES})
-target_link_libraries(chemkit-builder ${CHEMKIT_LIBRARIES} ${Boost_LIBRARIES} ${QT_LIBRARIES})
+add_executable(chemkit-builder ${SOURCES} ${UI_SOURCES} ${RCC_SOURCES})
+target_link_libraries(chemkit-builder Qt5::Widgets Qt5::OpenGL ${CHEMKIT_LIBRARIES} ${Boost_LIBRARIES})
 install(TARGETS chemkit-builder DESTINATION bin)

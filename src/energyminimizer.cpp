@@ -35,7 +35,7 @@
 
 #include "energyminimizer.h"
 
-#include <QtConcurrentRun>
+#include <QtConcurrent/QtConcurrent>
 
 // --- Construction and Destruction ---------------------------------------- //
 EnergyMinimizer::EnergyMinimizer(chemkit::Molecule *molecule)
@@ -129,7 +129,7 @@ void EnergyMinimizer::start()
     }
 
     if(m_moleculeChanged){
-        QByteArray forceFieldNameString = m_forceFieldName.toAscii();
+        QByteArray forceFieldNameString = m_forceFieldName.toLatin1();
         bool ok = m_optimizer->setForceField(forceFieldNameString.constData());
         if(!ok){
             setState(SetupFailed);
